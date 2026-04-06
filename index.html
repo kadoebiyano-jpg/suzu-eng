@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Special Privilege Invitation</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    font-family: "Times New Roman", serif;
+  }
+
+  .page-wrap {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #000;
+  }
+
+  /* 背景動画 */
+  .bg-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  /* 全体の白ベール */
+  .video-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(1px);
+    z-index: 1;
+  }
+
+  /* 中央480pxの本体 */
+  .content-frame {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 48px 22px 80px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  /* タイトル全体 */
+/* スマホだけ改行 */
+@media (max-width: 600px) {
+  .sp-break {
+    display: block;
+  }
+}
+  .hero-title {
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 100px;
+    font-family: serif;
+    color: rgba(45, 45, 45, 0.7);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+ .hero-title .line {
+  font-size: clamp(1.8rem, 5.5vw, 2.6rem);
+}
+
+  /* タイトル1文字ずつ */
+  .hero-title span span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    filter: blur(3px);
+    animation: flowChar 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes flowChar {
+    0% {
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+      filter: blur(3px);
+    }
+
+    60% {
+      opacity: 0.55;
+      filter: blur(1.5px);
+    }
+
+    100% {
+      opacity: 0.7;
+      transform: translateY(0) scale(1);
+      filter: blur(0.3px);
+    }
+  }
+
+  .hero-title span span:nth-child(1)  { animation-delay: 0.05s; }
+  .hero-title span span:nth-child(2)  { animation-delay: 0.10s; }
+  .hero-title span span:nth-child(3)  { animation-delay: 0.15s; }
+  .hero-title span span:nth-child(4)  { animation-delay: 0.20s; }
+  .hero-title span span:nth-child(5)  { animation-delay: 0.25s; }
+  .hero-title span span:nth-child(6)  { animation-delay: 0.30s; }
+  .hero-title span span:nth-child(7)  { animation-delay: 0.35s; }
+  .hero-title span span:nth-child(8)  { animation-delay: 0.40s; }
+  .hero-title span span:nth-child(9)  { animation-delay: 0.45s; }
+  .hero-title span span:nth-child(10) { animation-delay: 0.50s; }
+  .hero-title span span:nth-child(11) { animation-delay: 0.55s; }
+  .hero-title span span:nth-child(12) { animation-delay: 0.60s; }
+  .hero-title span span:nth-child(13) { animation-delay: 0.65s; }
+  .hero-title span span:nth-child(14) { animation-delay: 0.70s; }
+  .hero-title span span:nth-child(15) { animation-delay: 0.75s; }
+  .hero-title span span:nth-child(16) { animation-delay: 0.80s; }
+  .hero-title span span:nth-child(17) { animation-delay: 0.85s; }
+  .hero-title span span:nth-child(18) { animation-delay: 0.90s; }
+  .hero-title span span:nth-child(19) { animation-delay: 0.95s; }
+  .hero-title span span:nth-child(20) { animation-delay: 1.00s; }
+
+  /* テキストセクション */
+.message {
+  margin-top: 80px;
+  padding: 28px 22px;
+}
+
+/* 英文 */
+.message p {
+  color: rgba(40, 40, 40, 0.7);
+  font-size: 1.05rem; /* ←ここだけ変更 */
+  line-height: 2;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+
+
+  /* ふわっと表示 */
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(6px);
+  animation: fadeMessage 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 少しずつ遅らせる */
+.message p:nth-child(1) { animation-delay: 2.4s; }
+.message p:nth-child(2) { animation-delay: 2.8s; }
+.message p:nth-child(3) { animation-delay: 3.2s; }
+.message p:nth-child(4) { animation-delay: 3.6s; }
+
+@keyframes fadeMessage {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0.7;
+    transform: translateY(0);
+    filter: blur(0.5px);
+  }
+}
+
+/* 画像ラップ */
+.bell-image-wrap {
+  margin-top: 60px;
+  text-align: center;
+
+  /* 初期状態 */
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(8px);
+
+  /* アニメーション */
+  animation: fadeImage 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 4.2s; /* ←文章の後に出す */
+}
+
+/* 画像本体 */
+.bell-image {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* アニメーション */
+@keyframes fadeImage {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 0.6;
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0.5px);
+  }
+}
+
+
+/* セクション */
+.suikinrei-text {
+  margin-top: 60px;
+  text-align: center;
+}
+
+/* テキスト */
+.suikinrei-text p {
+  color: rgba(40, 40, 40, 0.7);
+  font-size: 1.05rem;
+  line-height: 2.1;
+  letter-spacing: 0.045em;
+  margin-bottom: 18px;
+
+  /* 初期状態 */
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(6px);
+
+  /* アニメーション */
+  animation: fadeSuikinrei 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 遅延（画像の後に出す） */
+.suikinrei-text p:nth-child(1) { animation-delay: 4.8s; }
+.suikinrei-text p:nth-child(2) { animation-delay: 5.2s; }
+.suikinrei-text p:nth-child(3) { animation-delay: 5.6s; }
+.suikinrei-text p:nth-child(4) { animation-delay: 6.0s; }
+
+/* アニメーション */
+@keyframes fadeSuikinrei {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0.7;
+    transform: translateY(0);
+    filter: blur(0.5px);
+  }
+}
+
+.suikinrei-text p:first-child {
+  font-size: 1.25rem; /* ←ほんの少し大きく */
+  letter-spacing: 0.06em;
+  margin-bottom: 22px;
+}
+</style>
+</head>
+<body>
+
+  <div class="page-wrap">
+
+    <!-- 背景動画 -->
+    <video class="bg-video" autoplay muted loop playsinline>
+      <source src="movie.mp4" type="video/mp4">
+    </video>
+
+    <div class="video-overlay"></div>
+
+    <!-- コンテンツ -->
+    <main class="content-frame">
+
+      <h1 class="hero-title">
+<span class="line">
+  <span>S</span><span>p</span><span>e</span><span>c</span><span>i</span><span>a</span><span>l</span>
+  <br class="sp-break">
+  <span>P</span><span>r</span><span>i</span><span>v</span><span>i</span><span>l</span><span>e</span><span>g</span><span>e</span>
+</span>
+  <span class="line">
+    <span>I</span><span>n</span><span>v</span><span>i</span><span>t</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span>
+  </span>
+</h1>
+
+<section class="message">
+  <p>
+    Thank you for your continued patronage of the Kadoebi Group, Ikebukuro POLARIS.
+  </p>
+
+  <p>
+    As a token of our appreciation,<br>
+    we have the honor of presenting a special bell known as “Suikinrei”<br>
+    exclusively to a select group of distinguished guests.
+  </p>
+
+  <p>
+    When visiting us,<br>
+    we kindly ask that you present this bell.
+  </p>
+
+  <p>
+    You will then be granted access to a special invitation prepared just for you.
+  </p>
+</section>
+
+<div class="bell-image-wrap">
+  <img src="your-image.jpg" alt="Suikinrei Bell" class="bell-image">
+</div>
+
+<section class="suikinrei-text">
+  <p>ABOUT THE SUIKINREI</p>
+
+  <p>
+    The Suikinrei is a special bell inspired by the delicate tones of the Suikinkutsu,
+    a traditional Japanese garden feature passed down since the Edo period.
+  </p>
+
+  <p>
+    Its clear, resonant sound gently reaches the heart,
+    much like the soft notes of a koto or a music box.
+  </p>
+
+  <p>
+    Since ancient times, it has been cherished as a symbol believed to ward off misfortune
+    and invite good fortune, and continues to be carefully preserved to this day.
+  </p>
+</section>
+
+    </main>
+  </div>
+
+</body>
+</html>
